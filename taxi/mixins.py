@@ -6,6 +6,7 @@ class UsernameSearchMixin:
             return queryset.filter(username__icontains=username)
         return queryset
 
+
 class ModelSearchMixin:
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -13,6 +14,7 @@ class ModelSearchMixin:
         if model:
             return queryset.filter(model__icontains=model)
         return queryset
+
 
 class NameSearchMixin:
     def get_queryset(self):

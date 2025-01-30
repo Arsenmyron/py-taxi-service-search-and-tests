@@ -6,10 +6,20 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .mixins import UsernameSearchMixin, ModelSearchMixin, NameSearchMixin
-from .models import Driver, Car, Manufacturer
-from .forms import DriverCreationForm, DriverLicenseUpdateForm, CarForm, DriverUsernameSearchForm, CarModelSearchForm, \
+from taxi.mixins import (
+    UsernameSearchMixin,
+    ModelSearchMixin,
+    NameSearchMixin
+)
+from taxi.models import Driver, Car, Manufacturer
+from taxi.forms import (
+    DriverCreationForm,
+    DriverLicenseUpdateForm,
+    CarForm,
+    DriverUsernameSearchForm,
+    CarModelSearchForm,
     ManufacturerNameSearchForm
+)
 
 
 @login_required
@@ -33,7 +43,11 @@ def index(request):
     return render(request, "taxi/index.html", context=context)
 
 
-class ManufacturerListView(LoginRequiredMixin, NameSearchMixin, generic.ListView):
+class ManufacturerListView(
+    LoginRequiredMixin,
+    NameSearchMixin,
+    generic.ListView
+):
     model = Manufacturer
     context_object_name = "manufacturer-list"
     template_name = "taxi/manufacturer_list.html"
@@ -43,6 +57,7 @@ class ManufacturerListView(LoginRequiredMixin, NameSearchMixin, generic.ListView
         context = super(ManufacturerListView, self).get_context_data(**kwargs)
         context["search_form"] = ManufacturerNameSearchForm()
         return context
+
 
 class ManufacturerCreateView(LoginRequiredMixin, generic.CreateView):
     model = Manufacturer
@@ -94,7 +109,11 @@ class CarDeleteView(LoginRequiredMixin, generic.DeleteView):
     success_url = reverse_lazy("taxi:car-list")
 
 
-class DriverListView(LoginRequiredMixin, UsernameSearchMixin, generic.ListView):
+class DriverListView(
+    LoginRequiredMixin,
+    UsernameSearchMixin,
+    generic.ListView
+):
     model = Driver
     paginate_by = 5
     context_object_name = "driver-list"

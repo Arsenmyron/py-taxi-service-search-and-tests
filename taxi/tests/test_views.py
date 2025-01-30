@@ -32,6 +32,7 @@ class ManufacturerSearchTests(TestCase):
 
         self.assertEqual(list(actual), list(expected))
 
+
 class CarSearchTests(TestCase):
     def setUp(self):
         self.user = get_user_model().objects.create_user(
@@ -96,6 +97,7 @@ class DriverSearchTests(TestCase):
             reverse("taxi:driver-list") + "?username=valiandro"
         )
         actual = response.context.get("driver-list")
-        expected = get_user_model().objects.filter(username__icontains="valiandro")
+        expected = get_user_model().objects.filter(
+            username__icontains="valiandro")
 
         self.assertEqual(list(actual), list(expected))
